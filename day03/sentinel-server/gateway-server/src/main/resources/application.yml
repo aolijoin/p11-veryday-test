@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: goProvider #自定义的路由 ID，保持唯一
+          uri: lb://consumer #lb代表从注册中心获取服务
+          predicates:
+            - Path=/api/** #路由条件，返回一个布尔值结果
+          filters:
+            - StripPrefix=1
